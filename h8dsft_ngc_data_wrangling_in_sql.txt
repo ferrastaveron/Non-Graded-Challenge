@@ -1,0 +1,23 @@
+Task:
+Kita sebagai data analyst diminta untuk menampilkan jumlah paten yang diregistrasikan antara tahun 2012 sampai 2023 dan mengandung kata "data mining".
+Lalu datanya tersebut diurutkan berdasarkan tahun paling baru dengan bulan paling terdahulu.
+
+query:
+
+
+
+	select
+
+	cast(left(Filing_Date, 4) as int) as year,
+	cast(substr(Filing_Date, 5, 2) as int) as month,
+	count(Patent_or_Publication_ID) as total_patent
+
+	from `patents-public-data.uspto_oce_cancer.publications`
+
+	where cast(left(Filing_Date, 4) as int) between 2012 and 2023
+  	and Patent_Title like "%data mining%"
+
+	group by year, month
+
+	order by year desc, month asc;
+	;
